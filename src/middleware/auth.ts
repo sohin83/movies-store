@@ -13,7 +13,7 @@ function authenticateToken(req: Request, res: Response, next: NextFunction) {
 
    jwt.verify(token, process.env.JWT_SECRET as string, (err, user) => {
       if (err) {
-         throw new AppError('Invalid token', 403);
+         throw new AppError('Invalid token', 400);
       }
 
       req.user = user as JwtPayload;
