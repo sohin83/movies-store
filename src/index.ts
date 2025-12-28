@@ -1,6 +1,4 @@
-import express, {
-   type Express,
-} from 'express';
+import express, { type Express } from 'express';
 import dotenv from 'dotenv';
 import connectDB from './startup/db';
 import routes from './startup/routes';

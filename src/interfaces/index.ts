@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
 export interface JwtPayload {
    _id: string;
@@ -42,4 +42,9 @@ export interface IRental extends Document {
    dateOut: Date;
    dateReturned?: Date;
    rentalFee?: number;
+   return(): void;
+}
+
+export interface RentalModel extends Model<IRental> {
+   lookupRental(customerId: string, movieId: string): Promise<IRental | null>;
 }

@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import z from 'zod';
-import { IRental } from '../interfaces';
+import { IRental, RentalModel } from '../interfaces';
+import moment from 'moment';
 
-export const rentalSchema = new mongoose.Schema<IRental>({
+export const rentalSchema = new mongoose.Schema<IRental, RentalModel>({
    customer: {
       type: mongoose.Schema.Types.ObjectId as any,
       ref: 'Customer',
@@ -40,7 +41,26 @@ export const rentalSchema = new mongoose.Schema<IRental>({
    },
 });
 
-export const Rental = mongoose.model<IRental>('Rental', rentalSchema);
+rentalSchema.statics.lookupRental = function (
+   customerId: string,
+   movieId: string
+) {
+   return this.findOne({
+      customer: customerId,
+      'movie._id': movieId,
+   });
+};
+
+rentalSchema.methods.return = function () {
+   this.dateReturned = new Date();
+   const rentalDays = moment().diff(this.dateOut, 'days');
+   this.rentalFee = rentalDays * this.movie.dailyRentalRate;
+};
+
+export const Rental = mongoose.model<IRental, RentalModel>(
+   'Rental',
+   rentalSchema
+);
 
 export const rentalZodSchema = z.object({
    customerId: z.string().min(24),
