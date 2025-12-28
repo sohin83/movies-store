@@ -25,3 +25,21 @@ export interface IMovie extends Document {
    numberInStock: number;
    dailyRentalRate: number;
 }
+
+export interface ICustomer extends Document {
+   name: string;
+   phone: string;
+   isGold: boolean;
+}
+
+export interface IRental extends Document {
+   customer: string; // Customer ID
+   movie: {
+      _id: string;
+      title: string;
+      dailyRentalRate: number;
+   };
+   dateOut: Date;
+   dateReturned?: Date;
+   rentalFee?: number;
+}

@@ -7,7 +7,8 @@
     "start": "tsx src/index.ts",
     "dev": "tsx watch src",
     "format": "prettier --write src/**/*.ts",
-    "test": "NODE_ENV=test jest --verbose"
+    "test": "NODE_ENV=test jest --verbose",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
